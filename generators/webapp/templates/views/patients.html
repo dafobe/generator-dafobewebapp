@@ -1,0 +1,45 @@
+<div  class="patients">
+	<header class="title">
+		<h1>Medtep Test</h1>
+	</header>
+	<section class="filters">
+		<div class="filter">
+			<input type="text"
+					placeholder="Full Name"
+					ng-model="patients.fullNameFilter" 
+					data-ng-change="patients.filterPatients()" />
+		</div>
+		<div class="filter">
+			<input type="text" 
+					placeholder="Status"
+					ng-model="patients.statusFilter" 
+					data-ng-change="patients.filterPatients()"/>
+		</div>
+	</section>
+	<section class="patients__list grid">
+		<header class="grid-header-row">
+			<div class="grid-header-cell" data-ng-click="patients.updateSorting('name')">
+				First name
+			</div>
+			<div class="grid-header-cell" data-ng-click="patients.updateSorting('lastName')">
+				Last name
+			</div>
+			<div class="grid-header-cell" data-ng-click="patients.updateSorting('status')">
+				Status
+			</div>
+		</header>
+		
+		<article class="patient grid-row" ng-repeat="patient in patients.filteredPatients | orderBy:patients.sortField">
+			<div class="patient_name grid-row-cell" ng-class="{ 'empty': !patient.hasName()}">
+				{{patient.name}}
+			</div>
+			<div class="patient_surname grid-row-cell" ng-class="{ 'empty': !patient.hasLastName()}">
+				{{patient.lastName}}
+			</div>
+			<div class="patient_status grid-row-cell {{patient.status}}" ng-class="{ 'empty': !patient.hasStatus()}">
+				{{patient.status}}
+			</div>
+		</article>
+	</section>
+</div>
+    

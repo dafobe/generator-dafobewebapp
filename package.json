@@ -1,0 +1,21 @@
+{
+  "name": "generator-dafobewebapp",
+  "version": "0.0.0",
+  "description": "Scaffold generator",
+  "license": "MIT",
+  "main": "webapp/index.js",
+  "repository": "dafobe/generator-dafobewebapp",
+  "author": {
+    "name": "",
+    "email": ""
+  },
+  "files": [
+    "generators"
+  ],
+  "keywords": [
+    "yeoman-generator"
+  ],
+  "dependencies": {
+    "yeoman-generator": "^0.19.0"
+  }
+}
