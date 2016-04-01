@@ -1,10 +1,14 @@
 'use strict';
 var yeoman = require('yeoman-generator');
+var inquirer = require('inquirer');
 
 module.exports = yeoman.generators.Base.extend({
   //Retrieving customizable parameters
   prompting: function () {
     var done = this.async();
+    var vanillaJS = 'vanilla',
+        reactJS = 'react',
+        angular = 'angular';
 
     // Have Yeoman greet the user.
     this.log('Welcome to the dafobe\'s webapp generator!');
@@ -17,10 +21,56 @@ module.exports = yeoman.generators.Base.extend({
                      default: this.appname
                    },
                    {
-                       type: 'confirm',
-                       name: 'addDemo',
-                       message: 'Would you like to generate a demo files?',
-                       default: true
+                     type: 'list',
+                     name: 'coreType',
+                     message: 'Please select type of JS project',
+                     choices: ['Vanilla', 'React', 'Angular'],
+                     filter: function(val){
+                       return val.toLowerCase();
+                   }
+                   },
+                   {
+                     type: 'checkbox',
+                     message: 'Select other configurations',
+                     name: 'toppings',
+                     choices: [
+                       new inquirer.Separator(' = ---- App Architecture ---- = '),
+                       {name: 'MVC (Model View Controller)', value: 'mvc', checked: true},
+                       {name: 'Flux', value: 'flux'},
+                       new inquirer.Separator(' = ---- App life cycle ---- = '),
+                       {name: 'Redux', value: 'redux'},
+                       new inquirer.Separator(' = ---- ES6 ---- = '),
+                       {name: 'Babel', checked: true},
+                       new inquirer.Separator(' = ---- Linting ---- = '),
+                       {name: 'ESLint'},
+                       new inquirer.Separator(' = ---- Build Tools ='),
+                       {name: 'Webpack'},
+                       {name: 'RequireJS'},
+                       {name: 'Browserify'},
+                       new inquirer.Separator(' = ---- Task Tools ='),
+                       {name: 'Gulp'},
+                       {name: 'Grunt'},
+                       new inquirer.Separator(' = ---- Testing ---- = '),
+                       {name: 'Jasmine'},
+                       {name: 'Mocha'},
+                       new inquirer.Separator(' = ---- Utility library ---- = '),
+                       {name: 'Lodash'},
+                       {name: 'Ramda'},
+                       new inquirer.Separator(' = ---- Styles ---- = '),
+                       {name: 'Less'},
+                       {name: 'Sass'},
+                       {name: 'PostCSS'},
+                       {name: 'Autoprefixer'},
+                       {name: 'Google Material'},
+                       {name: 'Bootstrap'},
+                       new inquirer.Separator(' = ---- WebServer ---- = '),
+                       {name: 'Express'},
+                       new inquirer.Separator(' = ---- Database ---- = '),
+                       {name: 'Mongodb'},
+                     ],
+                     filter: function(val){
+                       return val.toLowerCase();
+                     }    
                    }
     ];
 
@@ -32,13 +82,16 @@ module.exports = yeoman.generators.Base.extend({
       done();
     }.bind(this));
   },
-  //Writing Logic here
   writing: {
-    //Copy the configuration files
+    //### -------------------------- ###
+    //#  Copy the configuration files  #
+    //### -------------------------- ###
     config: function() {
       console.log('--- Destination Folder ---', this.destinationRoot());
       this.destinationRoot(this.props.name.replace(' ',''));
       console.log('--- new Destination Folder ---', this.destinationRoot());
+      
+      console.log('--- Answers ---', this.answers);
       this.fs.copyTpl(
           this.templatePath('_package.json'),
           this.destinationPath('package.json'), {
@@ -56,7 +109,9 @@ module.exports = yeoman.generators.Base.extend({
           this.destinationPath('.bowerrc')
       );
     },
-    //Copy application files
+    //### --------------------- ###
+    //#  Copy application files  #
+    //### -------------------- ###
     app: function() {
       //Styles
       this.fs.copyTpl(
@@ -74,6 +129,9 @@ module.exports = yeoman.generators.Base.extend({
       );
     }
   },
+  //### ------------------ ###
+  //#  Install Dependencies  #
+  //### ------------------ ###
   install: function () {
     this.installDependencies();
   }
