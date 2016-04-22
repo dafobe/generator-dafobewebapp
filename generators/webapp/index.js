@@ -22,23 +22,33 @@ module.exports = yeoman.generators.Base.extend({
                    },
                    {
                      type: 'list',
-                     name: 'coreType',
-                     message: 'Please select type of JS project',
+                     name: 'architecture',
+                     message: 'Please select Architecture',
+                     choices: ['MVC', 'Flux'],
+                     filter: function(val){
+                       return val.toLowerCase();
+                   },
+                   {
+                     type: 'list',
+                     name: 'core',
+                     message: 'Please select Architecture',
                      choices: ['Vanilla', 'React', 'Angular'],
                      filter: function(val){
                        return val.toLowerCase();
-                   }
+                   },
+                   {
+                     type: 'list',
+                     name: 'Data',
+                     message: 'Please select Architecture',
+                     choices: ['MongoDB', 'Json'],
+                     filter: function(val){
+                       return val.toLowerCase();
                    },
                    {
                      type: 'checkbox',
                      message: 'Select other configurations',
-                     name: 'toppings',
+                     name: 'configurations',
                      choices: [
-                       new inquirer.Separator(' = ---- App Architecture ---- = '),
-                       {name: 'MVC (Model View Controller)', value: 'mvc', checked: true},
-                       {name: 'Flux', value: 'flux'},
-                       new inquirer.Separator(' = ---- App life cycle ---- = '),
-                       {name: 'Redux', value: 'redux'},
                        new inquirer.Separator(' = ---- ES6 ---- = '),
                        {name: 'Babel', checked: true},
                        new inquirer.Separator(' = ---- Linting ---- = '),
@@ -53,6 +63,7 @@ module.exports = yeoman.generators.Base.extend({
                        new inquirer.Separator(' = ---- Testing ---- = '),
                        {name: 'Jasmine'},
                        {name: 'Mocha'},
+                       {name: 'Chai'},
                        new inquirer.Separator(' = ---- Utility library ---- = '),
                        {name: 'Lodash'},
                        {name: 'Ramda'},
@@ -64,9 +75,8 @@ module.exports = yeoman.generators.Base.extend({
                        {name: 'Google Material'},
                        {name: 'Bootstrap'},
                        new inquirer.Separator(' = ---- WebServer ---- = '),
-                       {name: 'Express'},
-                       new inquirer.Separator(' = ---- Database ---- = '),
-                       {name: 'Mongodb'},
+                       {name: 'Webpack-Dev-Server'}
+                       {name: 'Express'}
                      ],
                      filter: function(val){
                        return val.toLowerCase();
